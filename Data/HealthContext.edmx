@@ -19,6 +19,7 @@
           <Property Name="UserId" Type="int" />
           <Property Name="DateAdded" Type="datetime" />
           <Property Name="Npi" Type="nvarchar" MaxLength="20" />
+          <Property Name="NumericValue" Type="float" />
         </EntityType>
         <EntityContainer Name="HealthContextStoreContainer">
           <EntitySet Name="LabData" EntityType="Self.LabData" Schema="dbo" store:Type="Tables" />
@@ -44,6 +45,7 @@
           <Property Name="UserId" Type="Int32" />
           <Property Name="DateAdded" Type="DateTime" Precision="3" />
           <Property Name="Npi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NumericValue" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -56,6 +58,7 @@
           <EntitySetMapping Name="LabDatas">
             <EntityTypeMapping TypeName="HealthContext.LabData">
               <MappingFragment StoreEntitySet="LabData">
+                <ScalarProperty Name="NumericValue" ColumnName="NumericValue" />
                 <ScalarProperty Name="Npi" ColumnName="Npi" />
                 <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

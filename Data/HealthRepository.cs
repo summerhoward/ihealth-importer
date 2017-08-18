@@ -14,16 +14,31 @@ namespace Data
         {
             Console.WriteLine(labDataList.Count() + " ready to be inserted.");
 
-            var labDataToSave = labDataList.Select(x => new LabData
+            var labDataToSave = labDataList.Select(x =>
             {
-                CardholderIndex = x.CardholderIndex,
-                LabTypeId = x.LabTypeId,
-                Source = x.Source,
-                LabSourceId = x.LabSourceId,
-                Value = x.Value,
-                LabDate = x.LabDate,
-                UserId = x.UserId,
-                DateAdded = x.DateAdded
+                var lab = new LabData
+                {
+                    CardholderIndex = x.CardholderIndex,
+                    LabTypeId = x.LabTypeId,
+                    Source = x.Source,
+                    LabSourceId = x.LabSourceId,
+                    Value = x.Value,
+                    LabDate = x.LabDate,
+                    UserId = x.UserId,
+                    DateAdded = x.DateAdded,
+                };
+                
+                var numericValue = 0.0;
+                if (!double.TryParse(x.Value, out numericValue))
+                {
+                    lab.NumericValue = null;
+                }
+                else
+                {
+                    lab.NumericValue = numericValue;
+                }
+
+                return lab;
             });
 
             var startDate = labDataList.OrderBy(x => x.LabDate).Select(x => x.LabDate.Date).FirstOrDefault();

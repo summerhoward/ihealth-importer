@@ -7,10 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace Data
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class LabData
     {
         public int Id { get; set; }
@@ -23,5 +24,6 @@ namespace Data
         public Nullable<int> UserId { get; set; }
         public Nullable<System.DateTime> DateAdded { get; set; }
         public string Npi { get; set; }
+        public Nullable<double> NumericValue { get; set; }
     }
 }

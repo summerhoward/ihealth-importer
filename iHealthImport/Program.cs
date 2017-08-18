@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
@@ -14,13 +15,14 @@ namespace iHealthImport
         private static readonly string RootPath = AppDomain.CurrentDomain.BaseDirectory;
         private static readonly HealthRepository HealthRepo = new HealthRepository();
         private static readonly string RequestStartDate = ConfigurationManager.AppSettings["RequestStartDate"];
-
+        private static readonly string WaitTime = ConfigurationManager.AppSettings["WaitTime"];
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         static void Main()
         {
             var requestStartDate = DateTime.Parse(RequestStartDate);
+            var waitTime = Double.Parse(WaitTime);
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -33,7 +35,10 @@ namespace iHealthImport
             file.Close();
             var filestream = new FileStream(logFileName, FileMode.Append, FileAccess.Write);
             var streamwriter = new StreamWriter(filestream){AutoFlush = true};
-            Console.SetOut(streamwriter);
+            if (!Debugger.IsAttached)
+            {
+                Console.SetOut(streamwriter);
+            }
             try
             {
                 Console.WriteLine("Welcome to the iHealth Automated API Request Importer");
@@ -56,8 +61,8 @@ namespace iHealthImport
                     }
 
                     if (currentRequestDate == currentDate) continue;
-                    Console.WriteLine("Sleeping for 1 minute to allow API accept next request");
-                    Thread.Sleep((int) TimeSpan.FromMinutes(1).TotalMilliseconds);
+                    Console.WriteLine("Sleeping for " + waitTime + " seconds to allow API accept next request");
+                    Thread.Sleep((int) TimeSpan.FromSeconds(waitTime).TotalMilliseconds);
                 }
                 Console.WriteLine("Request Start Date has reached yesterday");
 
