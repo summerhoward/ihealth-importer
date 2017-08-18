@@ -73,6 +73,11 @@ namespace iHealthImport
                     config.Save(ConfigurationSaveMode.Modified);
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                EmailHelper.SendEmailAsync();
+            }
             finally
             {
                 streamwriter.Close();

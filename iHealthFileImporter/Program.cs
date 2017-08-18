@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Data;
 using Data.Models;
 
@@ -29,6 +30,10 @@ namespace iHealthFileImporter
                 Console.WriteLine("Welcome to the iHealth Automated File Importer");
                 DoFileCheck();
                 Console.WriteLine("Import complete");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
             finally
             {

@@ -82,6 +82,8 @@ namespace Data
                         streamwriter.Close();
                         filestream.Close();
                         Console.SetOut(oldOut);
+
+                        throw;
                     }
                 }
             }
